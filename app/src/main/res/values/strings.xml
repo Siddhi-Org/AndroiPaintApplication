@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Paint</string>
+    <string name="Save">Save</string>
+    <string name="pencil">Pencil</string>
+    <string name="clear">Clear</string>
+    <string name="back">Back</string>
+</resources>
