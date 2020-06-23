@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // This method will come under save option
+    // TODO:  This method will come under save option
     private void showSavePaintingConfirmationDialog(){
         AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
         saveDialog.setTitle("Save drawing");
