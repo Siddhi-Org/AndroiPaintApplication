@@ -4,4 +4,9 @@
     <string name="pencil">Pencil</string>
     <string name="clear">Clear</string>
     <string name="back">Back</string>
+    <string name="drawer_open">Drawer opened</string>
+    <string name="drawer_close">Drawer Closed</string>
+    <string name="redo">Redo</string>
+    <string name="undo">Undo</string>
+
 </resources>
