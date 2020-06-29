@@ -1,5 +1,6 @@
 package com.example.paintapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,13 +14,13 @@ import android.view.View;
 import java.util.ArrayList;
 
 
-public class MyCanvas extends  View implements View.OnTouchListener {
+public class MyCanvas extends View implements View.OnTouchListener{
 
     Paint m_Paint;
     Path m_Path;
     Canvas m_Canvas;
     public static boolean isEraserActive = false;
-    public static boolean undo = false;
+    public static boolean undo1 = false;
     private int color = Color.BLACK;
     private int stroke = 6;
     private float mX, mY;
@@ -27,13 +28,12 @@ public class MyCanvas extends  View implements View.OnTouchListener {
     ArrayList<Pair<Path, Paint>> undonePaths = new ArrayList<Pair<Path, Paint>>();
     private static final float TOUCH_TOLERANCE = 4;
 
-    public MyCanvas(Context context, AttributeSet attrs) {
+
+
+    public MyCanvas(final Context context, AttributeSet attrs) {
         super(context, attrs);
-        setFocusable(true);
-        setFocusableInTouchMode(true);
-        setBackgroundColor(Color.WHITE);
-        this.setOnTouchListener(this);
-        onCanvasInitialization();
+       onCanvasInitialization();
+
     }
 
     /**
@@ -41,6 +41,10 @@ public class MyCanvas extends  View implements View.OnTouchListener {
      * One time initialization reduces resource consumption.
      */
     public void onCanvasInitialization() {
+        setFocusable(true);
+        setFocusableInTouchMode(true);
+        setBackgroundColor(Color.WHITE);
+        this.setOnTouchListener(this);
         m_Paint = new Paint();
         m_Paint.setAntiAlias(true);
         m_Paint.setDither(true);
@@ -55,14 +59,20 @@ public class MyCanvas extends  View implements View.OnTouchListener {
         m_Path = new Path();
         Paint newPaint = new Paint(m_Paint);
         paths.add(new Pair<Path, Paint>(m_Path, newPaint));
+
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        for (Pair<Path, Paint> p : paths) {
-            canvas.drawPath(p.first, p.second);
+        {
+            for (Pair<Path, Paint> p : paths) {
+                canvas.drawPath(p.first, p.second);
+            }
         }
+        super.onDraw(canvas);
     }
+
+
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
@@ -74,20 +84,17 @@ public class MyCanvas extends  View implements View.OnTouchListener {
             case MotionEvent.ACTION_DOWN:
                 touch_start(xPos, yPos);
                 invalidate();
-                return true;
-
+                break;
             case MotionEvent.ACTION_MOVE:
                 touch_move(xPos, yPos);
                 invalidate();
-                return true;
-
+                break;
             case MotionEvent.ACTION_UP:
                 touch_up();
                 invalidate();
                 break;
-
             default:
-                return false;
+               break;
         }
         invalidate();
         return true;
@@ -138,7 +145,7 @@ public class MyCanvas extends  View implements View.OnTouchListener {
     public void onClickUndo() {
         if (!paths.isEmpty()) {//paths.size() > 0) {
             undonePaths.add(paths.remove(paths.size() - 1));
-            undo = true;
+            undo1 = true;
             invalidate();
         }
     }
@@ -146,7 +153,7 @@ public class MyCanvas extends  View implements View.OnTouchListener {
     public void onClickRedo() {
         if (!undonePaths.isEmpty()) {//undonePaths.size() > 0) {
             paths.add(undonePaths.remove(undonePaths.size() - 1));
-            undo = true;
+            undo1 = true;
             invalidate();
         }
     }
@@ -154,4 +161,5 @@ public class MyCanvas extends  View implements View.OnTouchListener {
     {
         m_Path.reset();
     }
+
 }
