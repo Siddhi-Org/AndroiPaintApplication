@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     View contentView;
     ImageView pencil,eraser,undo,redo;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
 
 
     @Override
@@ -79,7 +83,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         "pencil selected",
                         Toast.LENGTH_SHORT);
                 toast.show();
-               setContentView(canvasObj);
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.holder, new PencilFragment());
+                fragmentTransaction.addToBackStack(null).commit();
                 break;
             case R.id.Eraser:
                 Toast toast1 = Toast.makeText(getApplicationContext(),
